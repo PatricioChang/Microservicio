@@ -1,0 +1,18 @@
+<div>
+  <ul>
+    <li *ngFor="let producto of productos; index as i">
+      <h3>{{ producto.nombre }}</h3>
+      <p>{{ producto.descripcion }}</p>
+      <span>${{ producto.precio }}</span>
+    </li>
+  </ul>
+
+  <button (click)="mostrarFormulario = true">Agregar Producto</button>
+
+  <app-agregar-productos
+  *ngIf="mostrarFormulario"
+  (productoAgregado)="onProductoAgregado($event)"
+  (cancelarAgregar)="mostrarFormulario = false"
+></app-agregar-productos>
+
+</div>
