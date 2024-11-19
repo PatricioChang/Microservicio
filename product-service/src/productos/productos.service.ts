@@ -1,24 +1,28 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Productos } from '@prisma/client';
+import { PrismaClient, Productos } from '@prisma/client';
 import { ClientProxy } from '@nestjs/microservices';
+import { CrearProductoDto } from './dto/crear-producto.dto';
 
 @Injectable()
-export class ProductosService {
-  constructor(private prisma: PrismaService,
-    @Inject('PRODUCTOS_QUEUE') private client: ClientProxy,
-  ) {}
-
-  async crear(data: { nombre: string; descripcion: string; precio: number }): Promise<Productos> {
-    const productoCreado = await this.prisma.productos.create({
-      data,
-    });
-    this.client.emit('producto_agregado', productoCreado); 
-
-    return productoCreado;
+export class ProductosService extends PrismaClient implements OnModuleInit {
+  private readonly logger = new Logger('ProductosService');
+  onModuleInit() {
+    this.$connect();
+    this.logger.log('Database connected');
   }
 
-  async findAll(): Promise<Productos[]> {
-    return this.prisma.productos.findMany();
+
+  async crear(crearProductoDto: CrearProductoDto) {
+    const criminal = await this.productos.create({
+      data: crearProductoDto,
+    });
+
+    return criminal;
+  }
+
+  async findAll() {
+    const listaProductos = await this.productos.findMany();
+    return listaProductos;
   }
 }
