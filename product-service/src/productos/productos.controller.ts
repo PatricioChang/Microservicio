@@ -17,4 +17,9 @@ export class ProductosController {
     console.log('Solicitando todos los productos');
     return this.productosService.findAll();
   }
+
+  @MessagePattern({ cmd: 'eliminar' })
+  eliminar(@Payload() id: number) {
+    return this.productosService.eliminar(id)
+  }
 }

@@ -19,4 +19,8 @@ export class ProductosService {
   agregarProductos(productos: { nombre: string; descripcion: string; precio: number }): Observable<any> {
     return this.http.post<any>(this.apiUrl, productos);
   }
+
+  eliminarProducto(id: number) {
+    return this.http.delete(this.apiUrl+'/'+id)
+  }
 }

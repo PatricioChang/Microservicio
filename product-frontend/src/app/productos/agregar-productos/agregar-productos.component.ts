@@ -20,7 +20,8 @@ export class AgregarProductosComponent {
   producto: Producto = {
     nombre: '',
     descripcion: '',
-    precio: 0
+    precio: 0,
+    id: 0
   };
 
   constructor(private productosService: ProductosService) {}
@@ -38,6 +39,6 @@ export class AgregarProductosComponent {
   }
 
   limpiarFormulario() {
-    this.producto = { nombre: '', descripcion: '', precio: 0 };
+    this.producto = { nombre: '', descripcion: '', precio: 0, id: 0 };
   }
 }

@@ -29,4 +29,18 @@ export class ProductosService extends PrismaClient implements OnModuleInit {
     const listaProductos = await this.productos.findMany();
     return listaProductos;
   }
+
+  async eliminar(id: number) {
+    try {
+      const productoEliminado = await this.productos.delete({
+        where: {
+          id: id,
+        },
+      });
+      return productoEliminado;
+    } catch (error) {
+      this.logger.error(`Error eliminando producto con id ${id}: ${error.message}`);
+      throw new Error(`Error eliminando producto: ${error.message}`);
+    }
+  }
 }

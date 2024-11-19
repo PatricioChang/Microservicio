@@ -53,4 +53,22 @@ export class ProductosController {
       throw new RpcException(error);
     }
   }
+
+  @Delete(':id')
+  public async eliminar(@Param('id') id: number) {
+    try {
+      console.log('Eliminando producto con ID:', id);
+      return await firstValueFrom(
+        this.productosClient.send({ cmd: 'eliminar' }, { id }),
+      )
+    } catch (error) {
+      if (error.code === 'ECONNREFUSED') {
+        return this.productosEspejoClient.send({ cmd: 'eliminar' }, { id }).pipe(catchError((err) => {
+            throw new RpcException(err)
+          }),
+        )
+      }
+      throw new RpcException(error)
+    }
+  }
 }

@@ -29,11 +29,21 @@ export class VerProductosComponent implements OnInit {
     this.productosService.getProductos().subscribe((data) => {
       this.productos = data;
     });
+    console.log(this.productos)
   }
 
   onProductoAgregado(producto: Producto) {
     this.productos.push(producto); 
     this.mostrarFormulario = false; 
+  }
+  
+
+  eliminarProducto(id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+      this.productosService.eliminarProducto(id).subscribe(() => {
+        this.productos = this.productos.filter(p => p.id !== id)
+      })
+    }
   }
   
 }
