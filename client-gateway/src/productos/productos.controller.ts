@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
-import { CreateProductoDto } from './dto/create-producto.dto';
+import { CrearProductoDto } from './dto/crear-producto.dto';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { catchError } from 'rxjs';
@@ -12,8 +12,24 @@ export class ProductosController {
     
   ) {}
   @Post()
-  crearProducto(@Body() newProducto: CreateProductoDto){
-    return this.productosClient.send({ cmd: 'crear' },{newProducto})
+  public async create(@Body() newProducto: CrearProductoDto) {
+    try {
+      const producto = await firstValueFrom(
+        this.productosClient.send({ cmd: 'crear' }, newProducto),
+      );
+      return producto;
+    } catch (error) {
+      if (error.code === 'ECONNREFUSED') {
+        return this.productosEspejoClient
+          .send({ cmd: 'crear' }, newProducto)
+          .pipe(
+            catchError((err) => {
+              throw new RpcException(err);
+            }),
+          );
+      }
+      throw new RpcException(error);
+    }
   }
 
   @Get()
