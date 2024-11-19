@@ -3,7 +3,7 @@ import { ProductosService } from './productos.service';
 import { CrearProductoDto } from './dto/crear-producto.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller('productos')
+@Controller()
 export class ProductosController {
   constructor(private readonly productosService: ProductosService) {}
 
@@ -14,6 +14,7 @@ export class ProductosController {
 
   @MessagePattern({ cmd: 'obtener' })
    findAll() {
+    console.log('Solicitando todos los productos');
     return this.productosService.findAll();
   }
 }

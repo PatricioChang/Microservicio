@@ -14,11 +14,11 @@ export class ProductosService extends PrismaClient implements OnModuleInit {
 
 
   async crear(crearProductoDto: CrearProductoDto) {
-    const criminal = await this.productos.create({
+    const productos = await this.productos.create({
       data: crearProductoDto,
     });
 
-    return criminal;
+    return productos;
   }
 
   async findAll() {
