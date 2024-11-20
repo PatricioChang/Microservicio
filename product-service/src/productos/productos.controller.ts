@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, ParseIntPipe } from '@nestjs/common';
 import { ProductosService } from './productos.service';
 import { CrearProductoDto } from './dto/crear-producto.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -19,7 +19,7 @@ export class ProductosController {
   }
 
   @MessagePattern({ cmd: 'eliminar' })
-  eliminar(@Payload() id: number) {
+  eliminar(@Payload(ParseIntPipe) id: number) {
     console.log(id)
     return this.productosService.eliminar(id)
   }
