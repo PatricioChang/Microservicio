@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseIntPipe } from '@nestjs/common';
 import { CrearProductoDto } from './dto/crear-producto.dto';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
@@ -55,11 +55,11 @@ export class ProductosController {
   }
 
   @Delete(':id')
-  public async eliminar(@Param('id') id: number) {
+  public async eliminar(@Param('id', ParseIntPipe) id: number) {
     try {
       console.log('Eliminando producto con ID:', id);
       return await firstValueFrom(
-        this.productosClient.send({ cmd: 'eliminar' }, { id }),
+        this.productosClient.send({ cmd: 'eliminar' }, id),
       )
     } catch (error) {
       if (error.code === 'ECONNREFUSED') {

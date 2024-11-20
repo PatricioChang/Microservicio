@@ -20,6 +20,7 @@ export class ProductosController {
 
   @MessagePattern({ cmd: 'eliminar' })
   eliminar(@Payload() id: number) {
+    console.log(id)
     return this.productosService.eliminar(id)
   }
 }

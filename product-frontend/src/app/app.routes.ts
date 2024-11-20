@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 import { VerProductosComponent } from './productos/ver-productos/ver-productos.component';
 import { AgregarProductosComponent } from './productos/agregar-productos/agregar-productos.component';
+import { AuthComponent } from './auth/auth/auth.component';
+import { RegisterComponent } from './register/register/register.component';
 
 export const routes: Routes = [
-    { path: '', component: VerProductosComponent }, 
-    { path: 'app-agregar-productos', component: AgregarProductosComponent },
+    {path: 'login', component: AuthComponent},
+    {path: 'verProductos', component: VerProductosComponent},
+    {path: 'registrarse', component: RegisterComponent},
+    {path: 'app-agregar-productos', component: AgregarProductosComponent },
+    {path: '', redirectTo: '/login', pathMatch: 'full'},
+    {path: '**', redirectTo: '/login'} 
 ];
