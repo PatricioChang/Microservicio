@@ -7,16 +7,14 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3003/usuario'
+  private apiUrl = 'http://localhost:3000/auth'
 
   constructor(
-    //private http: HttpClient
+    private http: HttpClient
   ) {}
 
-  public autentificar(correo: string, contrasena: string): Observable<boolean>{
-    if(correo=='admin'&&contrasena=='admin'){
-      return of(true)
-    }
-    return of(false)
+  public autentificar(correo: string, contrasena: string): Observable<any> {
+    const usuario = {correo, contrasena}
+    return this.http.post(this.apiUrl+'/login', usuario)
   }
 }

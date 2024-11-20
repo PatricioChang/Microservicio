@@ -3,12 +3,16 @@
     <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Registro</h2>
     <form (ngSubmit)="onSubmit()">
       <div class="mb-4">
+        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre</label>
+        <input id="nombre" type="text" [(ngModel)]="dataRegistro.nombre" name="nombre" required class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+      </div>
+      <div class="mb-4">
         <label for="email" class="block text-gray-700 font-medium mb-2">Correo Electrónico</label>
         <input id="email" type="email" [(ngModel)]="dataRegistro.correo" name="email" required class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
       </div>
       <div class="mb-4">
         <label for="password" class="block text-gray-700 font-medium mb-2">Contraseña</label>
-        <input id="password" type="password" [(ngModel)]="dataRegistro.contrasena" name="password" required class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        <input id="password" type="password" [(ngModel)]="dataRegistro.password" name="password" required class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
       </div>
       <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
         Registrarse

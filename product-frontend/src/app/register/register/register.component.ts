@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegisterService } from '../register.service';
 
 @Component({
   selector: 'app-register',
@@ -12,18 +13,24 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private registerService: RegisterService
   ) {}
 
   ngOnInit(): void {
     
   }
 
-  dataRegistro = {correo: '', contrasena: ''}
+  dataRegistro = {nombre: '', correo: '', password: ''}
 
   public onSubmit() {
-    console.log('Datos de registro:', this.dataRegistro)
-    alert('Registro exitoso. Ahora puedes iniciar sesión.')
-    this.router.navigate(['/login'])
+    
+    this.registerService.registrarUsuario(this.dataRegistro).subscribe(respuesta=>{
+      if(respuesta){
+        console.log('Datos de registro:', this.dataRegistro)
+        alert('Registro exitoso. Ahora puedes iniciar sesión.')
+        this.router.navigate(['/login'])
+      }
+    })
   }
 }

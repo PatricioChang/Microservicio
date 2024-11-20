@@ -10,13 +10,13 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
-        port: 3005,
+        port: 3008,
       },
     },
     
   );
 
   await app.listen();
-  logger.log(`Puerto 3005`);
+  logger.log(`Puerto 3008`);
 }
 bootstrap();
